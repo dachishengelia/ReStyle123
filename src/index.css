@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+:root {
+  --primary-color: #2563eb;
+  --secondary-color: #16a34a;
+  --text-color: #374151;
+  --bg-color: #f9fafb;
+  --hover-bg-color: #e5e7eb;
+}
+
+.dark {
+  --primary-color: #3b82f6;
+  --secondary-color: #22c55e;
+  --text-color: #f3f4f6;
+  --bg-color: #111827;
+  --hover-bg-color: #374151;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+}
+
+button {
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+a {
+  color: var(--primary-color);
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--secondary-color);
+}
+
+@keyframes marquee-fast {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee-fast {
+  display: flex;
+  width: max-content;
+  animation: marquee-fast 60s linear infinite;
+  will-change: transform;
+}
+
+@keyframes marquee-slow {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee-slow {
+  display: flex;
+  width: max-content;
+  animation: marquee-slow 120s linear infinite;
+  will-change: transform;
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); } 
+}
+
+.animate-scroll {
+  display: flex;
+  width: max-content;
+  animation: scroll 1000s linear infinite;
+  will-change: transform;
+}
