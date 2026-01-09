@@ -85,8 +85,8 @@ const AdminPanel = () => {
   if (loading) return <div className="text-center py-10">Loading admin panel...</div>;
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className={`p-6 w-[90%] ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-md`}>
+    <div className={`flex items-center justify-center min-h-screen ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`}>
+      <div className={`p-6 w-[90%] ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'} rounded-lg shadow-md`}>
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-900 dark:text-gray-200">Admin Dashboard</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">

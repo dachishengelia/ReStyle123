@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext.jsx";
+import { ThemeContext } from "../context/ThemeContext.jsx";
 import ProductCard from "../components/ProductCard";
 import { useNavigate } from "react-router-dom";
 
 export default function YourProducts({ toggleFav, cart, addToCart, removeFromCart }) {
   const { user } = useContext(AuthContext);
+  const { theme } = useContext(ThemeContext);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -48,18 +50,18 @@ export default function YourProducts({ toggleFav, cart, addToCart, removeFromCar
   }
 
   return (
-    <div className="p-4">
+    <div className={`p-4 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-xl font-bold">Your Products</h1>
+        <h1 className="text-xl font-bold text-gray-900 dark:text-gray-200">Your Products</h1>
         <button
           onClick={() => navigate("/add-product")}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="bg-blue-600 dark:bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-700 dark:hover:bg-blue-800"
         >
           Add Product
         </button>
       </div>
       {products.length === 0 ? (
-        <p>You have not added any products yet.</p>
+        <p className="text-gray-700 dark:text-gray-300">You have not added any products yet.</p>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {products.map((p) => (
