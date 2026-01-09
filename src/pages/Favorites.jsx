@@ -18,7 +18,7 @@ export default function Favorites() {
       try {
         setLoading(true);
         const res = await axios.get(
-          "https://re-style-backend.vercel.app/api/product-actions/my/favorites",
+          "https://restyle-backend123.vercel.app/api/product-actions/my/favorites",
           { withCredentials: true }
         );
         setFavoriteProducts(res.data.favorites || []); // ensure it's always an array

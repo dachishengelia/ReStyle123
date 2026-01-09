@@ -42,7 +42,7 @@ export default function App() {
 
   // 🔥 ADDED: fetch products from backend
   React.useEffect(() => {
-    fetch("https://re-style-backend.vercel.app/api/products" /*"http://localhost:3000/api/products" */)
+    fetch("https://restyle-backend123.vercel.app" /*"http://localhost:3000/api/products" */)
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((err) => console.error("Failed to load products:", err));

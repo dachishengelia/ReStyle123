@@ -26,7 +26,7 @@ export default function ProductCard({ p, onDelete, onToggleFavProp }) {
     const fetchFav = async () => {
       try {
         const res = await axios.get(
-          "https://re-style-backend.vercel.app/api/product-actions/my/favorites",
+          "https://restyle-backend123.vercel.app/api/product-actions/my/favorites",
           { withCredentials: true }
         );
         setIsFav(res.data.favorites.includes(p._id));
@@ -49,7 +49,7 @@ export default function ProductCard({ p, onDelete, onToggleFavProp }) {
     e.stopPropagation();
     try {
       const res = await axios.post(
-        "https://re-style-backend.vercel.app/api/checkout/create-checkout-session",
+        "https://restyle-backend123.vercel.app/api/checkout/create-checkout-session",
         {},
         { withCredentials: true }
       );
@@ -77,7 +77,7 @@ export default function ProductCard({ p, onDelete, onToggleFavProp }) {
 
     try {
       const res = await axios.post(
-        `https://re-style-backend.vercel.app/api/product-actions/${p._id}/like`,
+        `https://restyle-backend123.vercel.app/api/product-actions/${p._id}/like`,
         {},
         { withCredentials: true }
       );
@@ -98,7 +98,7 @@ export default function ProductCard({ p, onDelete, onToggleFavProp }) {
 
     try {
       const res = await axios.post(
-        `https://re-style-backend.vercel.app/api/product-actions/${p._id}/favorite`,
+        `https://restyle-backend123.vercel.app/api/product-actions/${p._id}/favorite`,
         {},
         { withCredentials: true }
       );

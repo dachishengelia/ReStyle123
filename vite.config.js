@@ -7,7 +7,7 @@ export default defineConfig({
     proxy: {
       "/api": {
         target: process.env.VERCEL === "1"
-          ? "https://re-style-backend.vercel.app"
+          ? "https://restyle-backend123.vercel.app"
           : "http://localhost:3000",
         changeOrigin: true,
         secure: false,

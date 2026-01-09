@@ -30,7 +30,7 @@ export default function Home({ favorites, toggleFav, cart, addToCart, removeFrom
     const fetchProducts = async () => {
       try {
         const res = await axios.get(
-          "https://re-style-backend.vercel.app/api/products"
+          "https://restyle-backend123.vercel.app/api/products"
         );
         if (!Array.isArray(res.data)) throw new Error("Invalid products data format");
         setProducts(res.data);

@@ -41,7 +41,7 @@ export default function ProductDetails() {
 
     try {
       const res = await axios.post(
-        `https://re-style-backend.vercel.app/api/product-actions/${productId}/comment`,
+        `https://restyle-backend123.vercel.app/api/product-actions/${productId}/comment`,
         { text: commentInput.trim() },
         { withCredentials: true }
       );
@@ -56,7 +56,7 @@ export default function ProductDetails() {
     if (!user) return;
     try {
       const res = await axios.delete(
-        `https://re-style-backend.vercel.app/api/product-actions/${productId}/comment/${commentId}`,
+        `https://restyle-backend123.vercel.app/api/product-actions/${productId}/comment/${commentId}`,
         { withCredentials: true }
       );
       setComments(res.data.comments);
