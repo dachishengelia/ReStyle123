@@ -88,63 +88,88 @@ export default function ProductDetails() {
   }
 
   return (
-    <div>
-      <div className="p-6 max-w-5xl mx-auto">
-      <div className={`${theme === 'dark' ? 'bg-gray-900' : 'bg-white'} shadow-lg rounded-xl overflow-hidden flex flex-col md:flex-row`}>
-        {/* Image Section */}
-        <div className="md:w-1/2 flex items-center justify-center bg-gray-50 dark:bg-gray-700 p-6">
-          <img
-            src={product.imageUrl || "https://via.placeholder.com/400x300?text=No+Image"}
-            alt={product.name}
-            className="w-full h-auto rounded-lg object-cover max-h-[400px]"
-          />
-        </div>
-
-        {/* Details Section */}
-        <div className="md:w-1/2 p-8 flex flex-col justify-between">
-          <div>
-            <h2 className="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-200">{product.name}</h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">{product.description}</p>
-            <p className="text-2xl font-semibold mb-4 text-green-600">{product.price} GEL</p>
-
-            {product.sizes && product.sizes.length > 0 && (
-              <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">Available Sizes: {product.sizes.join(", ")}</p>
-            )}
-            {product.colors && product.colors.length > 0 && (
-              <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">Available Colors: {product.colors.join(", ")}</p>
-            )}
-
-
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
-              Seller: <span className="font-medium">{product.sellerId?.username || "Unknown"}</span>
+    <div className="p-6 max-w-5xl mx-auto">
+    {/* Product Card */}
+    <div className={`${theme === 'dark' ? 'bg-gray-900' : 'bg-white'} shadow-lg rounded-xl overflow-hidden flex flex-col md:flex-row`}>
+      
+      {/* Image Section */}
+      <div className={`md:w-1/2 flex items-center justify-center p-6 ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-50'}`}>
+        <img
+          src={product.imageUrl || "https://via.placeholder.com/400x300?text=No+Image"}
+          alt={product.name}
+          className="w-full h-auto rounded-lg object-cover max-h-[400px]"
+        />
+      </div>
+  
+      {/* Details Section */}
+      <div className="md:w-1/2 p-8 flex flex-col justify-between">
+        <div>
+          <h2 className={`text-3xl font-bold mb-4 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-800'}`}>
+            {product.name}
+          </h2>
+          <p className={`mb-6 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+            {product.description}
+          </p>
+          <p className="text-2xl font-semibold mb-4 text-green-600">
+            {product.price} GEL
+          </p>
+  
+          {product.sizes?.length > 0 && (
+            <p className={`text-sm mb-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+              Available Sizes: {product.sizes.join(", ")}
             </p>
-          </div>
-
-
-          <div className="flex flex-col gap-4">
-            <button disabled className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold opacity-50 cursor-not-allowed">
-              Add to Cart
-            </button>
-            <button disabled className="w-full bg-green-600 text-white px-6 py-3 rounded-lg text-lg font-semibold opacity-50 cursor-not-allowed">
-              Buy Now
-            </button>
-          </div>
+          )}
+          {product.colors?.length > 0 && (
+            <p className={`text-sm mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+              Available Colors: {product.colors.join(", ")}
+            </p>
+          )}
+  
+          <p className={`text-sm mb-6 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
+            Seller: <span className="font-medium">{product.sellerId?.username || "Unknown"}</span>
+          </p>
+        </div>
+  
+        <div className="flex flex-col gap-4">
+          <button
+            disabled
+            className={`w-full px-6 py-3 rounded-lg text-lg font-semibold text-white opacity-50 cursor-not-allowed ${
+              theme === 'dark' ? 'bg-blue-700' : 'bg-blue-600'
+            }`}
+          >
+            Add to Cart
+          </button>
+          <button
+            disabled
+            className={`w-full px-6 py-3 rounded-lg text-lg font-semibold text-white opacity-50 cursor-not-allowed ${
+              theme === 'dark' ? 'bg-green-700' : 'bg-green-600'
+            }`}
+          >
+            Buy Now
+          </button>
         </div>
       </div>
     </div>
   
+    {/* Comments Section */}
     <div className={`mt-8 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'} shadow-lg rounded-xl p-6`}>
-      <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-gray-200">Comments</h3>
+      <h3 className={`text-xl font-bold mb-4 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-800'}`}>
+        Comments
+      </h3>
+  
       <div className="mb-4">
         {comments.length === 0 ? (
-          <p className="text-gray-500 dark:text-gray-400">No comments yet.</p>
+          <p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}>No comments yet.</p>
         ) : (
           comments.map((c) => (
-            <div key={c._id || c.createdAt} className="mb-2 text-gray-800 dark:text-gray-200 border-b border-gray-200 dark:border-gray-600 pb-1">
+            <div
+              key={c._id || c.createdAt}
+              className={`mb-2 border-b pb-1 ${
+                theme === 'dark' ? 'border-gray-600 text-gray-200' : 'border-gray-200 text-gray-800'
+              }`}
+            >
               <span className="font-semibold">{c.username}:</span> <span>{c.text}</span>
-              <div className="text-xs text-gray-400">
-                {new Date(c.createdAt).toLocaleString()}
-              </div>
+              <div className="text-xs text-gray-400">{new Date(c.createdAt).toLocaleString()}</div>
               {user && (user._id === c.userId || user.role === "admin") && (
                 <button
                   onClick={() => handleDeleteComment(c._id)}
@@ -157,6 +182,7 @@ export default function ProductDetails() {
           ))
         )}
       </div>
+  
       {user && (
         <div>
           <input
@@ -164,17 +190,24 @@ export default function ProductDetails() {
             value={commentInput}
             onChange={(e) => setCommentInput(e.target.value)}
             placeholder="Add a comment..."
-            className={`border border-gray-300 dark:border-gray-600 ${theme === 'dark' ? 'bg-gray-900 text-gray-200' : 'bg-white text-gray-900'} p-2 rounded w-full mb-2`}
+            className={`w-full p-2 mb-2 rounded border ${
+              theme === 'dark'
+                ? 'bg-gray-900 text-gray-200 border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500'
+                : 'bg-white text-gray-900 border-gray-300 placeholder-gray-500 focus:ring-blue-500 focus:border-blue-500'
+            }`}
           />
           <button
             onClick={handleAddComment}
-            className="bg-blue-500 dark:bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-600 dark:hover:bg-blue-700"
+            className={`px-4 py-2 rounded text-white transition ${
+              theme === 'dark' ? 'bg-blue-600 hover:bg-blue-700' : 'bg-blue-500 hover:bg-blue-600'
+            }`}
           >
             Add Comment
           </button>
         </div>
       )}
     </div>
-      </div>
+  </div>
+  
     );
   }

@@ -1,11 +1,16 @@
 import React, { useContext } from "react";
-import { CartContext } from "../context/CartContext.jsx";
 import { ThemeContext } from "../context/ThemeContext.jsx";
 import CheckoutButton from "../components/CheckoutButton.jsx";
 
-export default function CartPage() {
-  const { cart, total, updateCart, removeFromCart, clearCart } = useContext(CartContext);
-  const { theme } = useContext(ThemeContext);
+export default function CartPage({ products, cart, updateCart, removeFromCart, clearCart }) {
+   const { theme } = useContext(ThemeContext);
+
+   const items = cart.map(item => ({
+     product: products.find(p => p._id === item.id),
+     quantity: item.quantity
+   })).filter(item => item.product);
+
+   const total = items.reduce((sum, item) => sum + (item.product?.price || 0) * item.quantity, 0);
 
   const handleQuantityChange = (productId, quantity) => {
     if (quantity < 1) quantity = 1;
@@ -19,7 +24,7 @@ export default function CartPage() {
         <p className="text-center text-gray-500 dark:text-gray-400">Your cart is empty.</p>
       ) : (
         <div className="space-y-6">
-          {cart.map((item) => (
+          {items.map((item) => (
             <div
               key={item.product._id}
               className="flex items-center justify-between border-b pb-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
@@ -35,7 +40,7 @@ export default function CartPage() {
               </div>
               <div className="flex items-center space-x-2">
                 <button
-                  onClick={() => handleQuantityChange(item.product._id, item.quantity - 1)}
+                  onClick={() => updateCart(item.product._id, item.quantity - 1)}
                   className={`px-3 py-1 rounded ${theme === 'dark' ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
                 >
                   -
@@ -44,12 +49,12 @@ export default function CartPage() {
                   type="number"
                   value={item.quantity}
                   onChange={(e) =>
-                    handleQuantityChange(item.product._id, parseInt(e.target.value))
+                    updateCart(item.product._id, parseInt(e.target.value))
                   }
                   className={`w-12 text-center border rounded ${theme === 'dark' ? 'bg-gray-700 text-gray-200' : 'bg-white text-gray-900'}`}
                 />
                 <button
-                  onClick={() => handleQuantityChange(item.product._id, item.quantity + 1)}
+                  onClick={() => updateCart(item.product._id, item.quantity + 1)}
                   className={`px-3 py-1 rounded ${theme === 'dark' ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
                 >
                   +
@@ -66,7 +71,7 @@ export default function CartPage() {
           <div className="flex justify-between items-center mt-6">
             <h3 className="text-xl font-bold text-gray-900 dark:text-gray-200">Total: {total.toFixed(2)} GEL</h3>
             <div className="flex space-x-4">
-              <CheckoutButton items={cart} />
+              <CheckoutButton items={items} />
               <button
                 onClick={clearCart}
                 className="bg-red-500 dark:bg-red-600 text-white px-6 py-2 rounded hover:bg-red-600 dark:hover:bg-red-700"

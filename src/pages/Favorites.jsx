@@ -1,47 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
+import React, { useContext } from "react";
 import ProductCard from "../components/ProductCard";
-import { AuthContext } from "../context/AuthContext.jsx";
-import { CartContext } from "../context/CartContext.jsx";
 import { ThemeContext } from "../context/ThemeContext.jsx";
 
-export default function Favorites() {
-  const { user } = useContext(AuthContext);
-  const { cart, addToCart, removeFromCart } = useContext(CartContext);
-  const { theme } = useContext(ThemeContext);
+export default function Favorites({ products, favorites, toggleFav, cart, addToCart, removeFromCart }) {
+   const { theme } = useContext(ThemeContext);
 
-  const [favoriteProducts, setFavoriteProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (!user) return;
-
-    const fetchFavorites = async () => {
-      try {
-        setLoading(true);
-        const res = await axios.get(
-          "https://restyle-backend123.vercel.app/api/product-actions/my/favorites",
-          { withCredentials: true }
-        );
-        setFavoriteProducts(res.data.favorites || []); // ensure it's always an array
-      } catch (err) {
-        console.error("Failed to fetch favorites:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchFavorites();
-  }, [user]);
-
-  const handleToggleFav = (productId, favorited) => {
-    if (!favorited) {
-      setFavoriteProducts((prev) => prev.filter((p) => p._id !== productId));
-    }
-  };
-
-  if (!user) return <p className="text-gray-700 dark:text-gray-300">Please log in to see your favorites.</p>;
-  if (loading) return <p className="text-gray-700 dark:text-gray-300">Loading favorites...</p>;
+   const favoriteProducts = products.filter(p => favorites.includes(p._id));
 
   return (
     <div className={`p-4 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
@@ -56,7 +20,8 @@ export default function Favorites() {
               key={p._id}
               p={p}
               onDelete={null} // no delete action in favorites
-              onToggleFavProp={handleToggleFav}
+              onToggleFavProp={toggleFav}
+              isFav={favorites.includes(p._id)}
               cart={cart}
               addToCart={addToCart}
               removeFromCart={removeFromCart}

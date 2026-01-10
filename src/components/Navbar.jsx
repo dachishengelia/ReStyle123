@@ -67,13 +67,13 @@ export default function Navbar({ favoritesCount }) {
             to="/favorites"
             className="text-sm font-medium hover:text-primary-color transition dark:text-gray-300"
           >
-            Favorites ({favoritesCount})
+            Favorites {/*({favoritesCount})*/}
           </Link>
           <Link
             to="/cart"
             className="text-sm font-medium hover:text-primary-color transition dark:text-gray-300"
           >
-            Cart ({cart.length})
+            Cart {/*({cart.length})*/}
           </Link>
 
           {/* User buttons */}

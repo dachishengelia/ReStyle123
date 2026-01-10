@@ -42,7 +42,7 @@ export default function App() {
 
   // 🔥 ADDED: fetch products from backend
   React.useEffect(() => {
-    fetch("https://restyle-backend123.vercel.app" /*"http://localhost:3000/api/products" */)
+    fetch("https://restyle-backend123.vercel.app/api/products")
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((err) => console.error("Failed to load products:", err));
@@ -57,17 +57,36 @@ export default function App() {
     setFavorites((prev) => (prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]));
   };
 
-  const [cart, setCart] = useState(() => getCookie("ecom_cart"));
+  const [cart, setCart] = useState(() => getCookie("ecom_cart") || []);
   React.useEffect(() => {
     setCookie("ecom_cart", cart, 7);
   }, [cart]);
 
   const addToCart = (id) => {
-    setCart((prev) => (prev.includes(id) ? prev : [...prev, id]));
+    setCart((prev) => {
+      const existing = prev.find(item => item.id === id);
+      if (existing) {
+        return prev.map(item => item.id === id ? { ...item, quantity: item.quantity + 1 } : item);
+      } else {
+        return [...prev, { id, quantity: 1 }];
+      }
+    });
   };
 
   const removeFromCart = (id) => {
-    setCart((prev) => prev.filter((item) => item !== id));
+    setCart((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const updateCart = (id, quantity) => {
+    if (quantity <= 0) {
+      removeFromCart(id);
+    } else {
+      setCart((prev) => prev.map(item => item.id === id ? { ...item, quantity } : item));
+    }
+  };
+
+  const clearCart = () => {
+    setCart([]);
   };
 
   const AppContent = () => {
@@ -127,7 +146,7 @@ export default function App() {
                 }
               /> */}
 
-              <Route path="/cart" element={<CartPage />} />
+              <Route path="/cart" element={<CartPage products={products} cart={cart} updateCart={updateCart} removeFromCart={removeFromCart} clearCart={clearCart} />} />
               <Route path="/admin" element={<RequireAdmin><AdminPanel /></RequireAdmin>} />
               <Route path="/add-product" element={<RequireSeller><AddProduct /></RequireSeller>} />
 

@@ -166,6 +166,8 @@ export default function Home({ favorites, toggleFav, cart, addToCart, removeFrom
         </div>
       )}
 
+
+
       {/* Products Grid */}
       <div className="p-4">
         <h1 className="text-xl font-bold mb-4 text-gray-900 dark:text-gray-200">Products</h1>
